@@ -145,7 +145,7 @@ export const SignUpView = () => {
                 ) }
 
                 <Button type="submit" className="w-full" disabled={ pending }>
-                  Sign In
+                  Sign Up
                 </Button>
 
                 <div
