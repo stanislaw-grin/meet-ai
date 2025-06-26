@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OctagonAlertIcon } from 'lucide-react'
+import { FaGithub, FaGoogle } from 'react-icons/fa'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -172,10 +173,10 @@ export const SignUpView = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('google') }>
-                    Google
+                    <FaGoogle/>
                   </Button>
                   <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('github') }>
-                    Github
+                    <FaGithub/>
                   </Button>
                 </div>
 
