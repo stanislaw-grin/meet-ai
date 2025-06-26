@@ -45,10 +45,25 @@ export const SignUpView = () => {
     setError(null)
     setPending(true)
 
-    authClient.signUp.email({ name: data.name, email: data.email, password: data.password }, {
+    authClient.signUp.email({ name: data.name, email: data.email, password: data.password, callbackURL: '/' }, {
       onSuccess: () => {
         setPending(false)
         router.push('/')
+      },
+      onError  : ({ error }) => {
+        setPending(false)
+        setError(error.message)
+      },
+    })
+  }
+
+  const onSocial = async (provider: 'google' | 'github') => {
+    setError(null)
+    setPending(true)
+
+    authClient.signIn.social({ provider, callbackURL: '/' }, {
+      onSuccess: () => {
+        setPending(false)
       },
       onError  : ({ error }) => {
         setPending(false)
@@ -156,10 +171,10 @@ export const SignUpView = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('google') }>
                     Google
                   </Button>
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('github') }>
                     Github
                   </Button>
                 </div>
