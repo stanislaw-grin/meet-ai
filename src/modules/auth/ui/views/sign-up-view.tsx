@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OctagonAlertIcon } from 'lucide-react'
+import { FaGithub, FaGoogle } from 'react-icons/fa'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -45,10 +46,25 @@ export const SignUpView = () => {
     setError(null)
     setPending(true)
 
-    authClient.signUp.email({ name: data.name, email: data.email, password: data.password }, {
+    authClient.signUp.email({ name: data.name, email: data.email, password: data.password, callbackURL: '/' }, {
       onSuccess: () => {
         setPending(false)
         router.push('/')
+      },
+      onError  : ({ error }) => {
+        setPending(false)
+        setError(error.message)
+      },
+    })
+  }
+
+  const onSocial = async (provider: 'google' | 'github') => {
+    setError(null)
+    setPending(true)
+
+    authClient.signIn.social({ provider, callbackURL: '/' }, {
+      onSuccess: () => {
+        setPending(false)
       },
       onError  : ({ error }) => {
         setPending(false)
@@ -156,11 +172,11 @@ export const SignUpView = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
-                    Google
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('google') } aria-label="Sign up with Google">
+                    <FaGoogle/>
                   </Button>
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
-                    Github
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('github') } aria-label="Sign up with GitHub">
+                    <FaGithub/>
                   </Button>
                 </div>
 

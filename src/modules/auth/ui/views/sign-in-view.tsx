@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OctagonAlertIcon } from 'lucide-react'
+import { FaGithub, FaGoogle } from 'react-icons/fa'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -37,12 +38,27 @@ export const SignInView = () => {
     setError(null)
     setPending(true)
 
-    authClient.signIn.email({ email: data.email, password: data.password }, {
+    authClient.signIn.email({ email: data.email, password: data.password, callbackURL: '/' }, {
       onSuccess: () => {
         setPending(false)
         router.push('/')
       },
-      onError: ({ error }) => {
+      onError  : ({ error }) => {
+        setPending(false)
+        setError(error.message)
+      },
+    })
+  }
+
+  const onSocial = async (provider: 'google' | 'github') => {
+    setError(null)
+    setPending(true)
+
+    authClient.signIn.social({ provider, callbackURL: '/' }, {
+      onSuccess: () => {
+        setPending(false)
+      },
+      onError  : ({ error }) => {
         setPending(false)
         setError(error.message)
       },
@@ -115,11 +131,11 @@ export const SignInView = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
-                    Google
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('google') } aria-label="Sign in with Google">
+                    <FaGoogle/>
                   </Button>
-                  <Button type="button" variant="outline" className="w-full" disabled={ pending }>
-                    Github
+                  <Button type="button" variant="outline" className="w-full" disabled={ pending } onClick={ () => onSocial('github') } aria-label="Sign in with GitHub">
+                    <FaGithub/>
                   </Button>
                 </div>
 
@@ -147,7 +163,8 @@ export const SignInView = () => {
 
       <div
         className="text-muted-foreground &:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+        By clicking continue, you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy
+        Policy</a>
       </div>
     </div>
   )
