@@ -12,16 +12,20 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  {
-    settings: {
-      'import/resolver': {
-        typescript: {
-          project: './tsconfig.json',
+  ...compat.extends(
+    'next/core-web-vitals',
+    'next/typescript',
+    {
+      // This block mimics .eslintrc-style config for import resolver
+      settings: {
+        'import/resolver': {
+          typescript: {
+            project: './tsconfig.json',
+          },
         },
       },
-    },
-  },
+    }
+  ),
   {
     plugins: {
       import: importPlugin,
@@ -30,30 +34,15 @@ const eslintConfig = [
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-          ],
-          pathGroups: [
+          groups                       : ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+          pathGroups                   : [
             {
-              pattern: 'react',
-              group: 'builtin',
-              position: 'before',
-            },
-            {
-              pattern: '@/lib/**',
-              group: 'internal',
-              position: 'before',
-            },
-            {
-              pattern: '@/**',
-              group: 'internal',
+              pattern : '@/**',
+              group   : 'internal',
               position: 'after',
             },
           ],
-          pathGroupsExcludedImportTypes: ['react', 'builtin'],
+          pathGroupsExcludedImportTypes: ['builtin'],
           'newlines-between'           : 'always',
           alphabetize                  : {
             order          : 'asc',

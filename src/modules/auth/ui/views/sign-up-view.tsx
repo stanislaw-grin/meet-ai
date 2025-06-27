@@ -1,20 +1,22 @@
 'use client'
 
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { OctagonAlertIcon } from 'lucide-react'
-import { FaGithub, FaGoogle } from 'react-icons/fa'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useState } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { OctagonAlertIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { FaGithub, FaGoogle } from 'react-icons/fa'
+import { z } from 'zod'
+
 import { authClient } from '@/lib/auth-client'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+
 import { Alert, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
   name           : z.string().min(1, { message: 'Name is required' }),
