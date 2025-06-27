@@ -12,7 +12,7 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
   {
     settings: {
       'import/resolver': {
@@ -26,7 +26,7 @@ const eslintConfig = [
     plugins: {
       import: importPlugin,
     },
-    rules  : {
+    rules: {
       'import/order': [
         'error',
         {
@@ -54,9 +54,9 @@ const eslintConfig = [
             },
           ],
           pathGroupsExcludedImportTypes: ['react', 'builtin'],
-          'newlines-between'           : 'always',
-          alphabetize                  : {
-            order          : 'asc',
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
             caseInsensitive: true,
           },
         },
