@@ -20,13 +20,14 @@ export function DataTable<TData, TValue>({ columns, data, onRowClick }: DataTabl
   return (
     <div className="rounded-lg border bg-background overflow-hidden">
       <Table>
-        <TableBody className="hover:cursor-pointer">
+        <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
                 onClick={() => onRowClick?.(row.original)}
+                className="cursor-pointer"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="text-sm p-4">
