@@ -125,3 +125,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer basse {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
