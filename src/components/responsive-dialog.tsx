@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Drawer, DrawerDescription, DrawerTitle, DrawerHeader, DrawerContent } from '@/components/ui/drawer'
 import { useIsMobile } from '@/hooks/use-mobile'
 
@@ -35,10 +35,10 @@ export const ResponsiveDialog = ({ title, description, children, open, onOpenCha
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
         {children}
       </DialogContent>
     </Dialog>
