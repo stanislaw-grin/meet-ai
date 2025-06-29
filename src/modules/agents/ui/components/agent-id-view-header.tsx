@@ -42,13 +42,13 @@ export const AgentIdViewHeader = ({ agentId, agentName, onEdit, onRemove }: Prop
       </Breadcrumb>
 
       <DropdownMenu modal={false}>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             <MoreVerticalIcon/>
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent>
+        <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onEdit}>
             <PencilIcon className="size-4 text-black"/> Edit
           </DropdownMenuItem>
