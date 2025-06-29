@@ -1,6 +1,7 @@
 'use client'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
 import { EmptyState } from '@/components/empty-state'
 import { ErrorState } from '@/components/error-state'
@@ -17,9 +18,11 @@ export const AgentsView = () => {
   const trpc = useTRPC()
   const { data } = useSuspenseQuery(trpc.agents.getMany.queryOptions({ ...filters }))
 
+  const router = useRouter()
+
   return (
     <div className="flex flex-col flex-1 pb-4 px-4 md:px-8 gap-y-4">
-      <DataTable columns={columns} data={data.items} />
+      <DataTable columns={columns} data={data.items} onRowClick={ ({ id }) => router.push(`/agents/${id}`) } />
       <DataPagination page={filters.page} totalPages={data.totalPages} onPageChange={(page) => setFilters({ page })} />
 
       {data.items.length === 0 && (
