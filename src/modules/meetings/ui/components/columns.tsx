@@ -98,7 +98,7 @@ export const columns: ColumnDef<MeetingsGetMany[number]>[] = [
         statusColorMap[row.original.status as keyof typeof statusColorMap]
       )}
       >
-        <ClockFadingIcon className="text-blue-700"/>
+        <ClockFadingIcon/>
         { row.original.duration ? formatDuration(row.original.duration) : 'No duration' }
       </Badge>
     )
