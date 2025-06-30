@@ -7,6 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import { auth } from '@/lib/auth'
 
+import { MeetingsListHeader } from '@/modules/meetings/ui/components/meetings-list-header'
 import { MeetingsView, MeetingsViewError, MeetingsViewLoading } from '@/modules/meetings/ui/views/meetings-view'
 import { getQueryClient, trpc } from '@/trpc/server'
 
@@ -23,12 +24,16 @@ export default async function Page() {
   void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({}))
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<MeetingsViewLoading />}>
-        <ErrorBoundary fallback={<MeetingsViewError />}>
-          <MeetingsView />
-        </ErrorBoundary>
-      </Suspense>
-    </HydrationBoundary>
+    <>
+      <MeetingsListHeader/>
+      
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<MeetingsViewLoading />}>
+          <ErrorBoundary fallback={<MeetingsViewError />}>
+            <MeetingsView />
+          </ErrorBoundary>
+        </Suspense>
+      </HydrationBoundary>
+    </>
   )
 }
