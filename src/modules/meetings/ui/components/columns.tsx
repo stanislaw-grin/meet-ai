@@ -93,12 +93,8 @@ export const columns: ColumnDef<MeetingsGetMany[number]>[] = [
     accessorKey: 'duration',
     header: 'Duration',
     cell: ({ row }) => (
-      <Badge variant="outline" className={cn(
-        'capitalize [&>svg]:size-4 text-muted-foreground',
-        statusColorMap[row.original.status as keyof typeof statusColorMap]
-      )}
-      >
-        <ClockFadingIcon/>
+      <Badge variant="outline" className="capitalize [&>svg]:size-4 text-muted-foreground">
+        <ClockFadingIcon className="text-blue-700"/>
         { row.original.duration ? formatDuration(row.original.duration) : 'No duration' }
       </Badge>
     )
