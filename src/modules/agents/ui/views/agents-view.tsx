@@ -20,12 +20,14 @@ export const AgentsView = () => {
 
   const router = useRouter()
 
+  const isAnyFilterModified = !!filters.search
+
   return (
     <div className="flex flex-col flex-1 pb-4 px-4 md:px-8 gap-y-4">
       <DataTable columns={columns} data={data.items} onRowClick={ ({ id }) => router.push(`/agents/${id}`) } />
       <DataPagination page={filters.page} totalPages={data.totalPages} onPageChange={(page) => setFilters({ page })} />
 
-      {data.items.length === 0 && (
+      {!isAnyFilterModified && data.items.length === 0 && (
         <EmptyState
           title="Create your first agent"
           description="Create an agent to join your meetings. Each agent will follow your instructions and can interact with participants during the call"
