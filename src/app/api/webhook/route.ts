@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
   const apiKey = req.headers.get('x-api-key')
 
   if (!signature || !apiKey) {
-    return NextResponse.json({ error: 'Missing signature of API key' }, { status: 400 })
+    return NextResponse.json({ error: 'Missing signature or API key' }, { status: 400 })
   }
 
   const body = await req.text()
 
   if (!verifySignatureWithSDK(body, signature)) {
-    return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
   let payload: unknown
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const meetingId = event.call.custom?.meetingId
 
     if (!meetingId) {
-      return NextResponse.json({ error: 'No meeting ID provided' }, { status: 4000 })
+      return NextResponse.json({ error: 'No meeting ID provided' }, { status: 400 })
     }
 
     const [existingMeeting] = await db
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     const meetingId = event.call_cid.split(':')[1]
 
     if (!meetingId) {
-      return NextResponse.json({ error: 'Mission meeting ID'}, { status: 400 })
+      return NextResponse.json({ error: 'Missing meeting ID'}, { status: 400 })
     }
 
     const call = streamVideo.video.call('default', meetingId)
