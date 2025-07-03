@@ -85,13 +85,13 @@ export const CompletedState = ({ data }: Props) => {
               <div>
                 <Markdown
                   components={{
-                    h1: (props) => <h1 className="text-2xl font-medium md-6" {...props} />,
-                    h2: (props) => <h2 className="text-xl font-medium md-6" {...props} />,
-                    h3: (props) => <h3 className="text-lg font-medium md-6" {...props} />,
-                    h4: (props) => <h4 className="text-base font-medium md-6" {...props} />,
-                    p: (props) => <p className="leading-relaxed md-6" {...props} />,
-                    ul: (props) => <ul className="list-disc list-inside md-6" {...props} />,
-                    ol: (props) => <ol className="list-decimal list-inside md-6" {...props} />,
+                    h1: (props) => <h1 className="text-2xl font-medium mb-6" {...props} />,
+                    h2: (props) => <h2 className="text-xl font-medium mb-6" {...props} />,
+                    h3: (props) => <h3 className="text-lg font-medium mb-6" {...props} />,
+                    h4: (props) => <h4 className="text-base font-medium mb-6" {...props} />,
+                    p: (props) => <p className="leading-relaxed mb-6" {...props} />,
+                    ul: (props) => <ul className="list-disc list-inside mb-6" {...props} />,
+                    ol: (props) => <ol className="list-decimal list-inside mb-6" {...props} />,
                     li: (props) => <li className="mb-1" {...props} />,
                     strong: (props) => <strong className="font-semibold" {...props} />,
                     code: (props) => <code className="bg-gray-100 px-1 py-0.5 rounded" {...props} />,
