@@ -51,7 +51,6 @@
     "@trpc/client": "^11.4.3",
     "@trpc/server": "^11.4.3",
     "@trpc/tanstack-react-query": "^11.4.3",
-    "agent-kit": "inngest/agent-kit",
     "better-auth": "^1.2.10",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",

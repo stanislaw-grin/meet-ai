@@ -65,21 +65,11 @@ export const meetingsProcessing = inngest.createFunction(
         .select()
         .from(user)
         .where(inArray(user.id, speakerIds))
-        .then((users) =>
-          users.map((user) => ({
-            ...user,
-          }))
-        )
 
       const agentSpeakers = await db
         .select()
         .from(agents)
         .where(inArray(agents.id, speakerIds))
-        .then((agents) =>
-          agents.map((agent) => ({
-            ...agent,
-          }))
-        )
 
       const speakers = [...userSpeakers, ...agentSpeakers]
 

@@ -43,7 +43,6 @@
         "@trpc/client": "^11.4.3",
         "@trpc/server": "^11.4.3",
         "@trpc/tanstack-react-query": "^11.4.3",
-        "agent-kit": "inngest/agent-kit",
         "better-auth": "^1.2.10",
         "class-variance-authority": "^0.7.1",
         "client-only": "^0.0.1",
@@ -897,8 +896,6 @@
     "adm-zip": ["adm-zip@0.5.16", "", {}, "sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ=="],
 
     "agent-base": ["agent-base@7.1.3", "", {}, "sha512-jRR5wdylq8CkOe6hei19GGZnxM6rBGwFl3Bg0YItGDimvjGtAvdZk4Pu6Cl4u4Igsws4a1fd1Vq3ezrhn4KmFw=="],
-
-    "agent-kit": ["agent-kit@github:inngest/agent-kit#6314c07", {}, "inngest-agent-kit-6314c07"],
 
     "ajv": ["ajv@6.12.6", "", { "dependencies": { "fast-deep-equal": "^3.1.1", "fast-json-stable-stringify": "^2.0.0", "json-schema-traverse": "^0.4.1", "uri-js": "^4.2.2" } }, "sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g=="],
 
