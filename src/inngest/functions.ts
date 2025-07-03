@@ -24,7 +24,12 @@ Write a clear and engaging narrative summary of the meeting. Focus on the key to
 #### Notes
 Break down the discussion into clearly labeled sections based on themes or topics. For each section, include a timestamp range and summarize the main points in concise bullet points.
 
-#### Example:
+Example:
+
+#### Section Name
+- Main point or demo shown here
+- Another key insight or interaction
+- Follow-up tool or explanation provided
 
 [00:00 – 05:30] Introduction & Context
 Brief background on the meeting's purpose
