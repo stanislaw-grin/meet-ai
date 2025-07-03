@@ -12,6 +12,7 @@ import { useConfirm } from '@/hooks/use-confirm'
 import { MeetingStatus } from '@/modules/meetings/types'
 import { ActiveState } from '@/modules/meetings/ui/components/active-state'
 import { CanceledState } from '@/modules/meetings/ui/components/canceled-state'
+import { CompletedState } from '@/modules/meetings/ui/components/completed-state'
 import { MeetingIdViewHeader } from '@/modules/meetings/ui/components/meeting-id-view-header'
 import { ProcessingState } from '@/modules/meetings/ui/components/processing-state'
 import { UpcomingState } from '@/modules/meetings/ui/components/upcoming-state'
@@ -90,7 +91,7 @@ export const MeetingIdView = ({ meetingId }: Props) => {
           />
         )}
         {isActive && <ActiveState meetingId={meetingId} />}
-        {isCompleted && <div>Completed</div>}
+        {isCompleted && <CompletedState data={ data }/>}
       </div>
     </>
   )
