@@ -10,6 +10,8 @@ import { Badge } from '@/components/ui/badge'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { MeetingGetOne } from '@/modules/meetings/types'
+import { ChatProvider } from '@/modules/meetings/ui/components/chat-provider'
+import { Transcript } from '@/modules/meetings/ui/components/transcript'
 
 interface Props {
   data: MeetingGetOne
@@ -103,6 +105,14 @@ export const CompletedState = ({ data }: Props) => {
               </div>
             </div>
           </div>
+        </TabsContent>
+
+        <TabsContent value="transcript">
+          <Transcript meetingId={data.id} />
+        </TabsContent>
+
+        <TabsContent value="chat">
+          <ChatProvider meetingId={data.id} />
         </TabsContent>
       </Tabs>
     </div>
