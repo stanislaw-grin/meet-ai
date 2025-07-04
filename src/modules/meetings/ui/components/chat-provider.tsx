@@ -16,7 +16,7 @@ export const ChatProvider = ({ meetingId }: Props) => {
     return (
       <LoadingState
         title="Loading..."
-        description="Please wait while we loading the chat"
+        description="Please wait while we are loading the chat"
       />
     )
   }
