@@ -21,7 +21,7 @@ interface Props {
 
 export const CallConnect = ({ meetingId, meetingName, userId, userName, userImage }: Props) => {
   const trpc = useTRPC()
-  const { mutateAsync: generateToken } = useMutation(trpc.meetings.generateToken.mutationOptions({}))
+  const { mutateAsync: generateVideoToken } = useMutation(trpc.meetings.generateVideoToken.mutationOptions({}))
 
   const [client, setClient] = useState<StreamVideoClient>()
 
@@ -33,7 +33,7 @@ export const CallConnect = ({ meetingId, meetingName, userId, userName, userImag
         name: userName,
         image: userImage,
       },
-      tokenProvider: generateToken,
+      tokenProvider: generateVideoToken,
     })
 
     setClient(_client)
@@ -42,7 +42,7 @@ export const CallConnect = ({ meetingId, meetingName, userId, userName, userImag
       _client.disconnectUser()
       setClient(undefined)
     }
-  }, [userId, userName, userImage, generateToken])
+  }, [userId, userName, userImage, generateVideoToken])
 
   const [call, setCall] = useState<Call>()
 
