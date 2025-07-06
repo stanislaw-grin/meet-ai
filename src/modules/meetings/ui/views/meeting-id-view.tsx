@@ -58,6 +58,27 @@ export const MeetingIdView = ({ meetingId }: Props) => {
     await removeMeeting.mutateAsync({ id: meetingId })
   }
 
+  const cancelMeeting = useMutation(
+    trpc.meetings.update.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}))
+
+        if (meetingId) {
+          await queryClient.invalidateQueries(trpc.meetings.getOne.queryOptions({ id: meetingId }))
+        }
+
+        toast.success('Meeting canceled successfully.')
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    })
+  )
+
+  const handleCancelMeeting = async () => {
+    cancelMeeting.mutate({ ...data, status: MeetingStatus.Canceled })
+  }
+
   const isActive = data.status === MeetingStatus.Active
   const isUpcoming = data.status === MeetingStatus.Upcoming
   const isCanceled = data.status === MeetingStatus.Canceled
@@ -87,8 +108,8 @@ export const MeetingIdView = ({ meetingId }: Props) => {
         {isUpcoming && (
           <UpcomingState
             meetingId={meetingId}
-            onCancelMeeting={() => {}}
-            isCanceling={false}
+            onCancelMeeting={handleCancelMeeting}
+            isCanceling={cancelMeeting.isPending}
           />
         )}
         {isActive && <ActiveState meetingId={meetingId} />}
