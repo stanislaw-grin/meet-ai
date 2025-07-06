@@ -6,7 +6,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from '@
 import { db } from '@/db'
 import { agents } from '@/db/schema'
 import { agentsInsertSchema, agentsUpdateSchema } from '@/modules/agents/schemas'
-import { createTRPCRouter, protectedProcedure } from '@/trpc/init'
+import { createTRPCRouter, premiumProcedure, protectedProcedure } from '@/trpc/init'
 
 export const agentsRouter = createTRPCRouter({
   getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input, ctx }) => {
@@ -63,17 +63,19 @@ export const agentsRouter = createTRPCRouter({
       }
     }),
 
-  create: protectedProcedure.input(agentsInsertSchema).mutation(async ({ input, ctx }) => {
-    const [createdAgent] = await db
-      .insert(agents)
-      .values({
-        ...input,
-        userId: ctx.auth.user.id,
-      })
-      .returning()
+  create: premiumProcedure('agents')
+    .input(agentsInsertSchema)
+    .mutation(async ({ input, ctx }) => {
+      const [createdAgent] = await db
+        .insert(agents)
+        .values({
+          ...input,
+          userId: ctx.auth.user.id,
+        })
+        .returning()
 
-    return createdAgent
-  }),
+      return createdAgent
+    }),
 
   remove: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ input, ctx }) => {
     const [removedAgent] = await db
