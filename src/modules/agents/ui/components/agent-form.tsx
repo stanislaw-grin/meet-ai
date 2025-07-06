@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -22,13 +23,13 @@ interface AgentFormProps {
 export const AgentForm = ({ onSuccess, onCancel, initialValues }: AgentFormProps) => {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   const createAgent = useMutation(
     trpc.agents.create.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}))
-
-        // TODO: invalidate free tier usage
+        await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions())
 
         toast.success('Agent created successfully.')
 
@@ -39,7 +40,9 @@ export const AgentForm = ({ onSuccess, onCancel, initialValues }: AgentFormProps
       onError: (error) => {
         toast.error(error.message)
 
-        // TODO: check if error code is FORBIDDEN, redirect to "/upgrade"
+        if (error.data?.code === 'FORBIDDEN') {
+          router.push('/upgrade')
+        }
       },
     })
   )
@@ -61,8 +64,6 @@ export const AgentForm = ({ onSuccess, onCancel, initialValues }: AgentFormProps
       },
       onError: (error) => {
         toast.error(error.message)
-
-        // TODO: check if error code is FORBIDDEN, redirect to "/upgrade"
       },
     })
   )

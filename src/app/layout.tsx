@@ -11,7 +11,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Summit.AI',
+  title: 'Sumeet.AI',
   description: 'AI-powered video call application with real-time agents, meeting summaries, and post-call features.',
 }
 

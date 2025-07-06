@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -25,6 +26,7 @@ interface MeetingFormProps {
 export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormProps) => {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   const [openNewAgentDialog, setOpenNewAgentDialog] = useState(false)
   const [agentsSearch, setAgentsSearch] = useState('')
@@ -40,6 +42,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
     trpc.meetings.create.mutationOptions({
       onSuccess: async (data) => {
         await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}))
+        await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions())
 
         toast.success('Meeting created successfully.')
 
@@ -71,7 +74,9 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
       onError: (error) => {
         toast.error(error.message)
 
-        // TODO: check if error code is FORBIDDEN, redirect to "/upgrade"
+        if (error.data?.code === 'FORBIDDEN') {
+          router.push('/upgrade')
+        }
       },
     })
   )
@@ -97,7 +102,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
 
   return (
     <>
-      <NewAgentDialog open={ openNewAgentDialog } onOpenChange={ setOpenNewAgentDialog } />
+      <NewAgentDialog open={openNewAgentDialog} onOpenChange={setOpenNewAgentDialog} />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -127,7 +132,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
                     onSearch={setAgentsSearch}
                     value={field.value}
                     placeholder="Select an Agent"
-                    isLoading={ agents.isPending }
+                    isLoading={agents.isPending}
                     options={(agents.data?.items ?? []).map((agent) => ({
                       id: agent.id,
                       value: agent.id,
