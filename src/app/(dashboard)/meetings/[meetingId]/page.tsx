@@ -17,8 +17,6 @@ interface Props {
 }
 
 export default async function Page({ params }: Props) {
-  const { meetingId } = await params
-
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -26,6 +24,8 @@ export default async function Page({ params }: Props) {
   if (!session) {
     redirect('/sign-in')
   }
+
+  const { meetingId } = await params
 
   const queryClient = getQueryClient()
   void queryClient.prefetchQuery(trpc.meetings.getOne.queryOptions({ id: meetingId }))

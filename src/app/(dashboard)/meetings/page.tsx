@@ -18,8 +18,6 @@ interface Props {
 }
 
 export default async function Page({ searchParams }: Props) {
-  const filters = await loadSearchParams(searchParams)
-
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -27,6 +25,8 @@ export default async function Page({ searchParams }: Props) {
   if (!session) {
     redirect('/sign-in')
   }
+
+  const filters = await loadSearchParams(searchParams)
 
   const queryClient = getQueryClient()
   void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({ ...filters }))
